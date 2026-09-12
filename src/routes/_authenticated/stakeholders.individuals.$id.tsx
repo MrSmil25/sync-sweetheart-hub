@@ -55,7 +55,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/_authenticated/stakeholders/individuals/$id")({
-  validateSearch: (search: Record<string, unknown>): { log?: boolean } => ({
+  validateSearch: (search: Record<string, unknown>): { log?: boolean | undefined } => ({
     log: search["log"] === "1" || search["log"] === true ? true : undefined,
   }),
   head: () => ({

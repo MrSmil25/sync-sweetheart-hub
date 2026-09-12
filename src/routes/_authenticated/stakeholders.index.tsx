@@ -28,7 +28,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/_authenticated/stakeholders/")({
-  validateSearch: (search: Record<string, unknown>): { level?: string; cat?: string } => ({
+  validateSearch: (search: Record<string, unknown>): { level?: string | undefined; cat?: string | undefined } => ({
     level: typeof search["level"] === "string" ? (search["level"] as string) : undefined,
     cat: typeof search["cat"] === "string" ? (search["cat"] as string) : undefined,
   }),
