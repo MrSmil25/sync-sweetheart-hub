@@ -15,7 +15,7 @@ export function RelationshipBadge({
   status,
   className = "",
 }: {
-  status?: RelationshipStatus | null;
+  status?: RelationshipStatus | null | undefined;
   className?: string;
 }) {
   const level = status?.relationship_level ?? null;

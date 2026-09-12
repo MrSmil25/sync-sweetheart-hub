@@ -32,7 +32,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/_authenticated/companies/$id")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { log?: boolean } => ({
     log: search["log"] === "1" || search["log"] === true ? true : undefined,
   }),
   head: () => ({
