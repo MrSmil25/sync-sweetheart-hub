@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Sparkles, UserX } from "lucide-react";
+import { CalendarClock, Snowflake, Sparkles, UserX } from "lucide-react";
 import { isBPH, useMyProfile } from "@/hooks/useProfile";
 import { countIndividualsWithoutPic, countStakeholdersAddedSince } from "@/lib/stakeholders";
+import { countFollowupsToday, countGoingCold } from "@/lib/interactions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 /** Kartu dorongan positif pemetaan pemangku kepentingan (tambahan, bukan pengganti). */
