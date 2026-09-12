@@ -1,7 +1,6 @@
 # Roadmap
 
 ## Selesai
-- [x] Ganti penuh visual `/login` dengan My Room WebGL, partikel, dan tiga mode autentikasi
 - [x] Salin repo MrSmil25/ksatria ke project, install dependensi, build OK
 - [x] Helper stakeholders.ts: company stakeholder, quick company, statistik dashboard; fix upload contentType
 - [x] Sidebar: section baru PEMANGKU KEPENTINGAN (Peta + Individuals)
