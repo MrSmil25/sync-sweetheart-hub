@@ -184,6 +184,29 @@ function StakeholdersPage() {
             <p className="mt-2 text-sm text-muted-foreground">
               Ditambahkan bulan ini: <span className="font-semibold text-foreground">{addedThisMonth}</span>
             </p>
+            <p className="mt-3 text-sm">
+              {RELATIONSHIP_LEVELS.map((l, idx) => (
+                <span key={l}>
+                  {idx > 0 && <span className="text-muted-foreground"> · </span>}
+                  <span className="text-muted-foreground">{LEVEL_META[l]?.label ?? l}: </span>
+                  <span className="font-semibold">{levelCounts[l] ?? 0}</span>
+                </span>
+              ))}
+            </p>
+            {levelTotal > 0 && (
+              <div className="mt-2 flex h-2.5 w-full overflow-hidden rounded-full bg-muted">
+                {RELATIONSHIP_LEVELS.map((l) =>
+                  (levelCounts[l] ?? 0) > 0 ? (
+                    <div
+                      key={l}
+                      className={LEVEL_META[l]?.bar ?? "bg-muted"}
+                      style={{ width: `${((levelCounts[l] ?? 0) / levelTotal) * 100}%` }}
+                      title={`${LEVEL_META[l]?.label ?? l}: ${levelCounts[l]}`}
+                    />
+                  ) : null,
+                )}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -218,6 +241,22 @@ function StakeholdersPage() {
             className="pl-9"
           />
         </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-1.5">
+        <span className="text-xs font-medium text-muted-foreground">Tingkat hubungan:</span>
+        {RELATIONSHIP_LEVELS.map((l) => (
+          <button key={l} type="button" onClick={() => toggle(levelFilter, l, setLevelFilter)}>
+            <Badge
+              variant="outline"
+              className={`cursor-pointer ${LEVEL_META[l]?.badge ?? ""} ${
+                levelFilter.includes(l) ? "ring-2 ring-primary" : "opacity-60"
+              }`}
+            >
+              {LEVEL_META[l]?.label ?? l}
+            </Badge>
+          </button>
+        ))}
       </div>
 
       {kind !== "individual" && (
@@ -280,6 +319,10 @@ function StakeholdersPage() {
                       <p className="mt-1.5 truncate text-xs text-muted-foreground">
                         {[c.city, c.industry].filter(Boolean).join(" · ") || "—"}
                       </p>
+                      <RelationshipBadge
+                        status={companyStatuses?.get(c.id)}
+                        className="mt-1.5 text-[11px]"
+                      />
                     </div>
                   </CardContent>
                 </Card>
@@ -325,6 +368,10 @@ function StakeholdersPage() {
                       {primary && (
                         <p className="mt-0.5 truncate text-xs text-muted-foreground">@ {primary}</p>
                       )}
+                      <RelationshipBadge
+                        status={individualStatuses?.get(i.id)}
+                        className="mt-1.5 text-[11px]"
+                      />
                     </div>
                   </CardContent>
                 </Card>

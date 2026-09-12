@@ -10,6 +10,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   LayoutDashboard,
   Radar,
+  HeartHandshake,
   User,
   Users,
   Boxes,
@@ -148,6 +149,7 @@ const navSections: NavSection[] = [
     items: [
       { to: "/stakeholders", label: "Peta Pemangku Kepentingan", icon: Network },
       { to: "/stakeholders/individuals", label: "Individuals", icon: ContactRound },
+      { to: "/stakeholders/dashboard", label: "Dashboard Hubungan", icon: HeartHandshake },
     ],
   },
   {

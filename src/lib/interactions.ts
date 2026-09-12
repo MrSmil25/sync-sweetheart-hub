@@ -414,3 +414,28 @@ export async function countGoingCold(): Promise<number> {
   if (error) throw error;
   return count ?? 0;
 }
+
+/** Heat map: kombinasi kategori/peran × tingkat hubungan. */
+export type HeatCell = { category: string; level: RelationshipLevel; count: number };
+
+export async function fetchRelationshipHeatmap(): Promise<HeatCell[]> {
+  const [{ data: comp, error: e1 }, { data: ind, error: e2 }] = await Promise.all([
+    supabase.from("company_relationship_status").select("stakeholder_category, relationship_level"),
+    supabase.from("individual_relationship_status").select("primary_role, relationship_level"),
+  ]);
+  if (e1) throw e1;
+  if (e2) throw e2;
+  const map = new Map<string, HeatCell>();
+  const add = (category: string | null, level: string | null) => {
+    if (!category || !level) return;
+    const key = `${category}|${level}`;
+    const cur = map.get(key);
+    if (cur) cur.count += 1;
+    else map.set(key, { category, level: level as RelationshipLevel, count: 1 });
+  };
+  for (const r of (comp ?? []) as Record<string, string | null>[])
+    add(r["stakeholder_category"] ?? null, r["relationship_level"] ?? null);
+  for (const r of (ind ?? []) as Record<string, string | null>[])
+    add(r["primary_role"] ?? null, r["relationship_level"] ?? null);
+  return Array.from(map.values());
+}
